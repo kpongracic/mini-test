@@ -104,13 +104,9 @@ auto Minimize(std::string const& seq, std::uint8_t const kmer_len,
 
   for (auto i = 0U; i < seq.size(); ++i) {
     curr_kmer_val = shift_kmer(curr_kmer_val, seq[i]);
-    rc_curr_kmer_val = shift_rc_kmer(rc_curr_kmer_val, seq[i]);
+    // rc_curr_kmer_val = shift_rc_kmer(rc_curr_kmer_val, seq[i]);
     if (i + 1U >= kmer_len) {
-      if (curr_kmer_val < rc_curr_kmer_val) {
-        window_push(KMer(hash(curr_kmer_val), i + 1U - kmer_len, 0));
-      } else if (curr_kmer_val > rc_curr_kmer_val) {
-        window_push(KMer(hash(rc_curr_kmer_val), i + 1U - kmer_len, 1));
-      }
+      window_push(KMer(hash(curr_kmer_val), i + 1U - kmer_len, 0));
     }
     if (i >= kmer_len - 1U + win_len - 1U) {
       if (dst.empty() || dst.back().position() != window.front().position()) {
